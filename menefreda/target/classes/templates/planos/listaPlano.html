@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script src="https://kit.fontawesome.com/1c8722ade6.js" crossorigin="anonymous"></script>
+    <title>Planos</title>  
+</head>
+<body>
+    <section class="crudContainer">
+        <div class="container">
+            <h1>Planos cadastrados</h1>
+            <div th:if="${mensagem}" class="msgContainer">
+                <p th:text="${mensagem}"></p>
+            </div>
+    
+            <div class="searchContainer">
+                <a th:href="@{/plano}" class="btn">Limpar busca</a>
+                <form th:action="@{/plano/buscar}" method="get">
+                    <input type="text" name="tipo" placeholder="Buscar por Tipo" required>
+                    <button type="submit" class="btn icone"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="plano : ${planos}">
+                            <td th:text="${plano.codigo}">Código</td>
+                            <td th:text="${plano.tipo}">Tipo</td>
+                            <td th:text="${plano.valor}">Valor</td>
+                            <td>
+                                <a th:href="@{/plano/editar/{codigo}(codigo=${plano.codigo})}" class="btn"><i class="fa-solid fa-pen"></i></a>
+                            </td>
+                            <td>
+                                <form th:action="@{/plano/excluir/{codigo}(codigo=${plano.codigo})}" method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir o plano?');">
+                                    <button type="submit" class="btn btnExcluir"><i class="fa-solid fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a th:href="@{/plano/novo}" class="btn"><i class="fa-solid fa-plus btn icone"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

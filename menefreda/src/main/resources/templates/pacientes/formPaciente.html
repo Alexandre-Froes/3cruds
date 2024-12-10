@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${paciente.nome != null ? 'Editar paciente' : 'Novo paciente'}">Form de paciente</title>
+    <script src="https://kit.fontawesome.com/1c8722ade6.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <section class="crudContainer">
+        <div class="container">
+            <h1 th:text="${paciente.cpf != null ? 'Editar paciente' : 'Novo paciente'}">Pacientes:</h1>
+            
+            <form th:action="@{${paciente.cpf != null} ? '/paciente/editar/' + ${paciente.cpf} : '/paciente/novo'}" th:object="${paciente}" method="post">
+                <div>
+                    <label for="txtCpf">CPF:</label>
+                    <input type="text" th:field="*{cpf}" id="txtCpf" placeholder="Digite o CPF" required th:readonly="${paciente.cpf != null}">
+                </div>
+                <div>
+                    <label for="txtNome">Nome:</label>
+                    <input type="text" th:field="*{nome}" id="txtNome" placeholder="Digite o nome" required>
+                </div>
+                <div>
+                    <label for="txtGenero">Gênero:</label>
+                    <input type="text" th:field="*{genero}" id="txtGenero" placeholder="Digite o gênero" required>
+                </div>
+                <div>
+                    <label for="txtEmail">Email:</label>
+                    <input type="email" th:field="*{email}" id="txtEmail" placeholder="Digite o email" required>
+                </div>
+                <div>
+                    <label for="txtEndereco">Endereço:</label>
+                    <input type="text" th:field="*{endereco}" id="txtEndereco" placeholder="Digite o endereço" required>
+                </div>
+                <div>
+                    <label for="txtTelefone">Telefone:</label>
+                    <input type="text" th:field="*{telefone}" id="txtTelefone" placeholder="Digite o telefone" required>
+                </div>
+                <div>
+                    <label for="txtDataNascimento">Data de Nascimento:</label>
+                    <input type="date" th:field="*{dataNascimento}" id="txtDataNascimento" placeholder="Digite a data de nascimento" required>
+                </div>
+    
+                <button type="submit" th:text="${paciente.cpf != null ? 'Atualizar' : 'Salvar'}" class="btn btnSalvar">Salvar</button>
+            </form>
+    
+            <a th:href="@{/paciente}" class="btn">Voltar à lista de pacientes</a>
+        </div>
+    </section>
+</body>
+</html>

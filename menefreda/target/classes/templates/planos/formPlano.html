@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${plano.tipo != null ? 'Editar plano' : 'Novo plano'}">Formulário de Plano</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script src="https://kit.fontawesome.com/1c8722ade6.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <section class="crudContainer">
+        <div class="container">
+            <h1 th:text="${plano.tipo != null ? 'Editar plano' : 'Novo plano'}">Planos:</h1>
+            
+            <form th:action="@{${plano.tipo != null} ? '/plano/editar/' + ${plano.codigo} : '/plano/novo'}" th:object="${plano}" method="post">
+                <div>
+                    <label for="txtCodigo">Código:</label>
+                    <input type="text" th:field="*{codigo}" id="txtCodigo" placeholder="Digite o código" required th:readonly="${plano.codigo != null}">
+                </div>
+                <div>
+                    <label for="txtTipo">Tipo:</label>
+                    <input type="text" th:field="*{tipo}" id="txtTipo" placeholder="Digite o nome" required>
+                </div>
+                <div>
+                    <label for="txtValor">Valor:</label>
+                    <input type="number" th:field="*{valor}" id="txtValor" placeholder="Digite o valor" required>
+                </div>
+    
+                <button type="submit" th:text="${plano.tipo != null ? 'Atualizar' : 'Salvar'}" class="btn btnSalvar">Salvar</button>
+            </form>
+    
+            <a th:href="@{/plano}" class="btn">Voltar à lista de planos</a>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacientes</title>
+    <script src="https://kit.fontawesome.com/1c8722ade6.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <section class="crudContainer">
+        <div class="container">
+            <h1>Pacientes cadastrados</h1>
+            <div th:if="${mensagem}" class="msgContainer">
+                <p th:text="${mensagem}"></p>
+            </div>
+
+            <div class="searchContainer">
+                <a th:href="@{/paciente}" class="btn">Limpar busca</a>
+                <form th:action="@{/paciente/buscar}" method="get">
+                    <input type="text" name="nome" placeholder="Buscar por Nome" required>
+                    <button type="submit" class="btn icone"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CPF</th>
+                            <th>Nome</th>
+                            <th>Gênero</th>
+                            <th>Email</th>
+                            <th>Endereço</th>
+                            <th>Telefone</th>
+                            <th>Data de Nascimento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="paciente : ${pacientes}">
+                            <td th:text="${paciente.cpf}">CPF</td>
+                            <td th:text="${paciente.nome}">Nome</td>
+                            <td th:text="${paciente.genero}">Gênero</td>
+                            <td th:text="${paciente.email}">Email</td>
+                            <td th:text="${paciente.endereco}">Endereço</td>
+                            <td th:text="${paciente.telefone}">Telefone</td>
+                            <td th:text="${paciente.dataNascimento}">Data de Nascimento</td>
+                            <td>
+                                <a th:href="@{/paciente/editar/{cpf}(cpf=${paciente.cpf})}" class="btn"><i class="fa-solid fa-pen"></i></a>
+                            </td>
+                            <td>
+                                <form th:action="@{/paciente/excluir/{codigo}(codigo=${paciente.cpf})}" method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir o paciente?');">
+                                    <button type="submit" class="btn btnExcluir"><i class="fa-solid fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a th:href="@{/paciente/novo}" class="btn"><i class="fa-solid fa-plus btn icone"></i></a>
+                            </td>   
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
