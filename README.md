@@ -1,3 +1,1 @@
-localhost:8080/medico/
-localhost:8080/plano/
-localhost:8080/paciente/
+O projeto está rodanddo na localhost padrão (8080)
