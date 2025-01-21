@@ -8,19 +8,12 @@
     <title>Planos</title>  
 </head>
 <body>
+    <header th:insert="~{fragments/menu :: menu}"></header>
     <section class="crudContainer">
         <div class="container">
             <h1>Planos cadastrados</h1>
             <div th:if="${mensagem}" class="msgContainer">
                 <p th:text="${mensagem}"></p>
-            </div>
-    
-            <div class="searchContainer">
-                <a th:href="@{/plano}" class="btn">Limpar busca</a>
-                <form th:action="@{/plano/buscar}" method="get">
-                    <input type="text" name="tipo" placeholder="Buscar por Tipo" required>
-                    <button type="submit" class="btn icone"><i class="fa-solid fa-magnifying-glass"></i></button>
-                </form>
             </div>
             <div>
                 <table>
@@ -37,17 +30,17 @@
                             <td th:text="${plano.tipo}">Tipo</td>
                             <td th:text="${plano.valor}">Valor</td>
                             <td>
-                                <a th:href="@{/plano/editar/{codigo}(codigo=${plano.codigo})}" class="btn"><i class="fa-solid fa-pen"></i></a>
+                                <a th:href="@{/planos/editar/{codigo}(codigo=${plano.codigo})}" class="btn"><i class="fa-solid fa-pen"></i></a>
                             </td>
                             <td>
-                                <form th:action="@{/plano/excluir/{codigo}(codigo=${plano.codigo})}" method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir o plano?');">
+                                <form th:action="@{/planos/excluir/{codigo}(codigo=${plano.codigo})}" method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir o plano?');">
                                     <button type="submit" class="btn btnExcluir"><i class="fa-solid fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <a th:href="@{/plano/novo}" class="btn"><i class="fa-solid fa-plus btn icone"></i></a>
+                                <a th:href="@{/planos/novo}" class="btn"><i class="fa-solid fa-plus btn icone"></i></a>
                             </td>
                         </tr>
                     </tbody>

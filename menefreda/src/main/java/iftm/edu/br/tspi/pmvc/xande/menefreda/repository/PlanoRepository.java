@@ -1,69 +1,85 @@
 package iftm.edu.br.tspi.pmvc.xande.menefreda.repository;
 
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import iftm.edu.br.tspi.pmvc.xande.menefreda.domain.Plano;
 
-@Component
+@Repository
 public class PlanoRepository {
-    private final List<Plano> planos;
-    
-    public PlanoRepository() {
-        this.planos = new ArrayList<>();
-        this.planos.add(new Plano(1, 100.00, "Bronze"));
-        this.planos.add(new Plano(2, 200.00, "Prata"));
+    private final JdbcTemplate conexao;
+
+    public PlanoRepository(JdbcTemplate conexao) {
+        this.conexao = conexao;
     }
 
-    public List<Plano> listarPlanos() {
-        return this.planos;
+    public Plano setPlano(ResultSet rs) throws SQLException {
+        Plano plano = new Plano();
+
+        plano.setCodigo(rs.getInt("cod_plano"));
+        plano.setValor(rs.getDouble("valor_plano"));
+        plano.setTipo(rs.getString("tipo_plano"));
+
+        return plano;
     }
 
-    public List<Plano> buscarPorTipo(String tipo) {
-        List<Plano> buscaPlanos = new ArrayList<>();
-        for (Plano plano : this.planos) {
-            if (plano.getTipo().equalsIgnoreCase(tipo)) {
-                buscaPlanos.add(plano);
-            }
-        }
-        return buscaPlanos;
+    public List<Plano> listar() {
+        String sql = """
+                    select cod_plano,
+                        valor_plano,
+                        tipo_plano
+                    from plano
+                    """;
+        return conexao.query(sql, (rs, rowNum) -> setPlano(rs));
     }
 
-    public Plano buscaPorCodigo(int codigo) {
-        for (Plano medico : planos) {
-            if (medico.getCodigo() == codigo) {
-                return medico;
-            }
-        }
-        return null;
+    public Plano buscaPorCodigo(Integer codigo) {
+        String sql = """
+                    select cod_plano,
+                        valor_plano,
+                        tipo_plano
+                    from plano
+                    where cod_plano = ?
+                    """;
+        return conexao.queryForObject(sql, (rs, rowNum) -> setPlano(rs),
+        codigo);
     }
 
-    public void novoPlano(Plano plano) {
-        this.planos.add(plano);
+    public void salvar(Plano plano) {
+        String sql = """
+                    insert into plano (
+                    cod_plano, 
+                    valor_plano, 
+                    tipo_plano)
+                    
+                    values (?, ?, ?)
+                    """;
+        conexao.update(sql, 
+                        plano.getCodigo(), 
+                        plano.getValor(), 
+                        plano.getTipo());
     }
 
-    public boolean deletePlano(int codigo) {
-        Plano plano = new Plano(codigo);
-        return this.planos.remove(plano);
+    public void atualizar(Plano plano) {
+        String sql = """
+                    update plano
+                    set valor_plano = ?,
+                        tipo_plano = ?
+                    where cod_plano = ?
+                    """;
+        conexao.update(sql, 
+                        plano.getValor(), 
+                        plano.getTipo(), 
+                        plano.getCodigo());
     }
 
-    public boolean updatePlano(Plano plano) {
-        int i = this.planos.indexOf(plano);
-        if (i != -1) {
-            this.planos.set(i, plano);
-            return true;
-        }
-        return false;
+    public void excluir(Integer codigo) {
+        String sql = "delete from plano where cod_plano = ?";
+        conexao.update(sql, codigo);
     }
 
-    public int obterProximoCodigo() {
-        for (int i = 1; i < this.planos.size(); i++) {
-            if (i + 1 != this.planos.get(i).getCodigo()) {
-                return i + 1;
-            }
-        }
-        return this.planos.size() + 1;
-    }
 }

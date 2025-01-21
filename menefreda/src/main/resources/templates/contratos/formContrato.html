@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${Contratos}">Form de contrato</title>
+    <script src="https://kit.fontawesome.com/1c8722ade6.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <header th:insert="~{fragments/menu :: menu}"></header>
+    <section class="crudContainer">
+        <div class="container">
+            <form th:action="@{${'/contratos/novo'}}" th:object="${contrato}" method="post">
+                <div>
+                    <label for="txtCódigo">Código:</label>
+                    <input type="text" th:field="*{codigo}" id="txtCódigo" placeholder="Digite o Código" required>
+                </div>
+                <div>
+                    <label for="txtCpf">Cpf:</label>
+                    <input type="text" th:field="*{paciente.cpf}" id="txtCpf" placeholder="Digite o Cpf" required>
+                </div>
+                <div>
+                    <label for="txtNome">Nome:</label>
+                    <input type="text" th:field="*{paciente.nome}" id="txtNome" required readonly>
+                </div>
+                <div>
+                    <label for="txtTipo">Tipo do Plano:</label>
+                    <input type="text" th:field="*{plano.tipo}" id="txtTipoPlano" placeholder="Digite o tipo do Plano" required>
+                </div>
+                <div>
+                    <label for="txtDataContrato">Data de Contratação:</label>
+                    <input type="date" th:field="*{dataContratacao}" id="txtDataContrato" placeholder="Coloque a data de Contrato" required>
+                </div>
+                <div>
+                    <label for="txtValidade">Validade do Contrato:</label>
+                    <input type="date" th:field="*{dataValidade}" id="txtValidade" placeholder="Digite o Validade" required>
+                </div>
+                <div>
+                    <label for="txtValor">Valor do Plano:</label>
+                    <input type="text" th:field="*{valor}" id="txtValor" placeholder="Digite oValore" required>
+                </div>
+                <button type="submit" text="Salvar" class="btn btnSalvar">Salvar</button>
+            </form>
+    
+            <a th:href="@{/contratos}" class="btn">Voltar à lista de contratos</a>
+        </div>
+    </section>
+</body>
+</html>

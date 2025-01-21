@@ -1,20 +1,26 @@
 package iftm.edu.br.tspi.pmvc.xande.menefreda.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
 
-import iftm.edu.br.tspi.pmvc.xande.menefreda.domain.Medico;
-import iftm.edu.br.tspi.pmvc.xande.menefreda.domain.Paciente;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import iftm.edu.br.tspi.pmvc.xande.menefreda.repository.PacienteRepository;
+import iftm.edu.br.tspi.pmvc.xande.menefreda.domain.Paciente;   
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+
 
 @Controller
-@RequestMapping("/paciente")
+@RequestMapping("/pacientes")
 public class PacienteController {
-    private final PacienteRepository repository;
+    
+    private PacienteRepository pacienteRepository;
 
     public static final String URL_LISTA = "pacientes/listaPaciente";
     public static final String URL_FORM = "pacientes/formPaciente";
@@ -24,70 +30,60 @@ public class PacienteController {
     public static final String ATRIBUTO_OBJETO = "paciente";
     public static final String ATRIBUTO_LISTA = "pacientes";
 
-    public PacienteController(PacienteRepository repository) {
-        this.repository = repository;
+    public PacienteController(PacienteRepository pacienteRepository) {
+        this.pacienteRepository = pacienteRepository;
     }
 
-    @GetMapping
+    @GetMapping("")
     public String listar(Model model) {
-        List<Paciente> pacientes = repository.listarPacientes();
+        List<Paciente> pacientes = pacienteRepository.listar();
         model.addAttribute(ATRIBUTO_LISTA, pacientes);
         return URL_LISTA;
     }
 
-    @GetMapping("/buscar")
-    public String buscaPorNome(@RequestParam("nome") String nome, Model model) {
-        List<Paciente> pacienteBusca = repository.buscarPorNome(nome);
-        model.addAttribute(ATRIBUTO_LISTA, pacienteBusca);
-        if(pacienteBusca.isEmpty()){
-            model.addAttribute(ATRIBUTO_MENSAGEM, nome+" não encontrado");
+    @GetMapping("/novo")
+    public String novo(Model model) {
+        model.addAttribute(ATRIBUTO_OBJETO, new Paciente());
+        return URL_FORM;
+    }
+    @PostMapping("/novo")
+    public String salvar(@ModelAttribute Paciente paciente, Model model) {
+        if(paciente.getCpf() != null) {
+            pacienteRepository.salvar(paciente);
+        } else {
+            pacienteRepository.atualizar(paciente);
         }
-        return URL_LISTA;
+
+        return listar(model);
     }
 
-    @GetMapping("/novo")
-    public String abrirFormNovoPaciente(Model model) {
-        Paciente paciente = new Paciente();
+    @PostMapping("/excluir/{cpf}")
+    public String excluir(@PathVariable("cpf") String cpf, Model model) {
+        pacienteRepository.excluir(cpf);
+        model.addAttribute(ATRIBUTO_MENSAGEM, "Paciente excluído com sucesso");
+        
+        return listar(model);
+    }
+    
+
+    @GetMapping("/editar/{cpf}")
+    public String editar(@PathVariable("cpf") String cpf, Model model) {
+        Paciente paciente = pacienteRepository.buscaPorCpf(cpf);
         model.addAttribute(ATRIBUTO_OBJETO, paciente);
         return URL_FORM;
     }
 
-    @GetMapping("/editar/{cpf}")
-    public String abrirFormEditarPaciente(@PathVariable("cpf") String cpf, Model model, RedirectAttributes redirectAttributes) {
-        Paciente pacienteBusca = repository.buscaPorCpf(cpf);
-        if (pacienteBusca == null) {
-            redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, "Paciente com CPF " + cpf + " não encontrado");
-            return URL_FORM_LISTA;
-        } else {
-            model.addAttribute(ATRIBUTO_OBJETO, pacienteBusca);
-            return URL_FORM;
+    @GetMapping("/buscar")
+    public String buscar(@RequestParam("nome") String nome, Model model) {
+        List<Paciente> pacientes = pacienteRepository.buscaPorNome(nome);
+
+        if (pacientes.isEmpty()) {
+            model.addAttribute(ATRIBUTO_MENSAGEM, 
+            "Paciente com o nome: " +nome+ " não encontrado(a)");
         }
+
+        model.addAttribute("pacientes", pacientes);
+        return URL_LISTA;
     }
 
-    @PostMapping("/novo")
-    public String salvarPaciente(@ModelAttribute("paciente") Paciente paciente, RedirectAttributes redirectAttributes) {
-        repository.novoPaciente(paciente);
-        redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, "Paciente " + paciente.getNome() + " cadastrado com sucesso");
-        return URL_FORM_LISTA;
-    }
-
-    @PostMapping("/excluir/{cpf}")
-    public String excluirPaciente(@PathVariable("cpf") String cpf, RedirectAttributes redirectAttributes) {
-        if (repository.deletePaciente(cpf)) {
-            redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, "Paciente com CPF " + cpf + " excluído com sucesso");
-        } else {
-            redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, "Paciente com CPF " + cpf + " não encontrado");
-        }
-        return URL_FORM_LISTA;
-    }
-
-    @PostMapping("/editar/{cpf}")
-    public String atualizarPaciente(@PathVariable("cpf") String cpf, @ModelAttribute("paciente") Paciente paciente, RedirectAttributes redirectAttributes) {
-        if (repository.updatePaciente(paciente)) {
-            redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, "Paciente " + paciente.getNome() + " atualizado com sucesso");
-        } else {
-            redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, "Paciente com CPF " + cpf + " não encontrado");
-        }
-        return URL_FORM_LISTA;
-    }
 }

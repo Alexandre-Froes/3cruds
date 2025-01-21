@@ -11,13 +11,13 @@
     <header th:insert="~{fragments/menu :: menu}"></header>
     <section class="crudContainer">
         <div class="container">
-            <h1>Pacientes cadastrados (teste remover depois)</h1>
+            <h1>Contratos de pacientes</h1>
             <div th:if="${mensagem}" class="msgContainer">
                 <p th:text="${mensagem}"></p>
             </div>
 
             <div class="searchContainer">
-                <form th:action="@{/pacientes/buscar}" method="get">
+                <form th:action="@{/contratos/buscar}" method="get">
                     <input type="reset" class="btn" value="Limpar busca">
                     <input type="text" name="nome" placeholder="Buscar por Nome" required>
                     <button type="submit" class="btn icone"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -27,37 +27,37 @@
                 <table>
                     <thead>
                         <tr>
+                            <th>Codigo</th>
                             <th>CPF</th>
                             <th>Nome</th>
-                            <th>Gênero</th>
-                            <th>Email</th>
-                            <th>Endereço</th>
-                            <th>Telefone</th>
-                            <th>Data de Nascimento</th>
+                            <th>Tipo do Plano</th>
+                            <th>Data Contrato</th>
+                            <th>Validade</th>
+                            <th>valor</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="paciente : ${pacientes}">
-                            <td th:text="${paciente.cpf}">CPF</td>
-                            <td th:text="${paciente.nome}">Nome</td>
-                            <td th:text="${paciente.genero}">Gênero</td>
-                            <td th:text="${paciente.email}">Email</td>
-                            <td th:text="${paciente.endereco}">Endereço</td>
-                            <td th:text="${paciente.telefone}">Telefone</td>
-                            <td th:text="${paciente.dataNascimento}">Data de Nascimento</td>
+                        <tr th:each="contrato : ${contratos}">
+                            <td th:text="${contrato.codigo}">codigo</td>
+                            <td th:text="${contrato.paciente.cpf}">CPF</td>
+                            <td th:text="${contrato.paciente.nome}">Nome</td>
+                            <td th:text="${contrato.plano.tipo}">Tipo plano</td>
+                            <td th:text="${contrato.dataContratacao}">Data inicio</td>
+                            <td th:text="${contrato.dataValidade}">Validade</td>
+                            <td th:text="${contrato.valor}">Valor</td>
                             <td>
-                                <a th:href="@{/pacientes/editar/{cpf}(cpf=${paciente.cpf})}" class="btn"><i class="fa-solid fa-pen"></i></a>
+                                <a th:href="@{/contratos/editar/{codigo}(codigo=${contrato.codigo})}" class="btn"><i class="fa-solid fa-pen"></i></a>
                             </td>
                             <td>
-                                <form th:action="@{/pacientes/excluir/{codigo}(codigo=${paciente.cpf})}" method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir o paciente?');">
+                                <form th:action="@{/contratos/excluir/{codigo}(codigo=${contrato.codigo})}" method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir o contrato?');">
                                     <button type="submit" class="btn btnExcluir"><i class="fa-solid fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <a th:href="@{/pacientes/novo}" class="btn"><i class="fa-solid fa-plus btn icone"></i></a>
-                            </td>   
+                                <a th:href="@{/contratos/novo}" class="btn"><i class="fa-solid fa-plus btn icone"></i></a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

@@ -1,5 +1,7 @@
 package iftm.edu.br.tspi.pmvc.xande.menefreda.domain;
 
+import java.sql.Date;
+
 public class Paciente {
     private String cpf;
     private String nome;
@@ -105,6 +107,10 @@ public class Paciente {
             return false;
         return true;
     }
+
+    public void setDataNascimento(Date date) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setDataNascimento'");
+    }
     
 }
-

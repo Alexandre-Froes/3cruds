@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu principal</title>
+</head>
+
+<body>
+    <nav th:fragment="menu">
+        <ul>
+            <li><a th:href="@{/}">Menu</a></li>
+            <li><a th:href="@{/pacientes}">Pacientes</a></li>
+            <li><a th:href="@{/planos}">Planos</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

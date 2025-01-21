@@ -1,35 +1,35 @@
 package iftm.edu.br.tspi.pmvc.xande.menefreda.domain;
 
 public class Plano {
-    private int codigo;
-    private double valor;
+    private Integer codigo;
+    private Double valor;
     private String tipo;
 
     public Plano() {}
 
-    public Plano(int codigo) {
+    public Plano(Integer codigo) {
         this.codigo = codigo;
     }
 
-    public Plano(int codigo, double valor, String tipo) {
+    public Plano(Integer codigo, Double valor, String tipo) {
         this.codigo = codigo;
         this.valor = valor;
         this.tipo = tipo;
     }
 
-    public int getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
 
-    public double getValor() {
+    public Double getValor() {
         return valor;
     }
 
-    public void setValor(double valor) {
+    public void setValor(Double valor) {
         this.valor = valor;
     }
 

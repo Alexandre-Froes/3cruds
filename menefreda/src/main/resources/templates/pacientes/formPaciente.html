@@ -8,14 +8,13 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
+    <header th:insert="~{fragments/menu :: menu}"></header>
     <section class="crudContainer">
         <div class="container">
-            <h1 th:text="${paciente.cpf != null ? 'Editar paciente' : 'Novo paciente'}">Pacientes:</h1>
-            
-            <form th:action="@{${paciente.cpf != null} ? '/paciente/editar/' + ${paciente.cpf} : '/paciente/novo'}" th:object="${paciente}" method="post">
+            <form th:action="@{${'/pacientes/novo'}}" th:object="${paciente}" method="post">
                 <div>
                     <label for="txtCpf">CPF:</label>
-                    <input type="text" th:field="*{cpf}" id="txtCpf" placeholder="Digite o CPF" required th:readonly="${paciente.cpf != null}">
+                    <input type="text" th:field="*{cpf}" id="txtCpf" placeholder="Digite o CPF" required>
                 </div>
                 <div>
                     <label for="txtNome">Nome:</label>
@@ -23,7 +22,12 @@
                 </div>
                 <div>
                     <label for="txtGenero">Gênero:</label>
-                    <input type="text" th:field="*{genero}" id="txtGenero" placeholder="Digite o gênero" required>
+                    <select id="txtGenero" name="genero" th:field="*{genero}">
+                        <option value="" selected>Escolha:</option>
+                        <option th:value="Masculino">Masulino</option>
+                        <option th:value="Feminino">Feminino</option>
+                        <option th:value="Outros">Outros</option>
+                    </select>
                 </div>
                 <div>
                     <label for="txtEmail">Email:</label>
@@ -42,10 +46,10 @@
                     <input type="date" th:field="*{dataNascimento}" id="txtDataNascimento" placeholder="Digite a data de nascimento" required>
                 </div>
     
-                <button type="submit" th:text="${paciente.cpf != null ? 'Atualizar' : 'Salvar'}" class="btn btnSalvar">Salvar</button>
+                <button type="submit" text="Salvar" class="btn btnSalvar">Salvar</button>
             </form>
     
-            <a th:href="@{/paciente}" class="btn">Voltar à lista de pacientes</a>
+            <a th:href="@{/pacientes}" class="btn">Voltar à lista de pacientes</a>
         </div>
     </section>
 </body>
