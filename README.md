@@ -1,1 +1,1 @@
-O projeto está rodanddo na localhost padrão (8080)
+O projeto está rodando na localhost padrão (8080)
