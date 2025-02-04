@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-MenefredaApplication<menefreda>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "iftm.edu.br.tspi.pmvc.xande.menefreda.MenefredaApplication",
+            "projectName": "menefreda",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
