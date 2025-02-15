@@ -47,7 +47,7 @@ public class ContratoRepository {
                         pa.cpf_paci,
                         pa.nome_paci,
                         pl.tipo_plano
-                    from contrata c, paciente pa, plano pl 
+                    from contrato c, paciente pa, plano pl 
                     where c.cpf_paci = pa.cpf_paci and c.cod_plano = pl.cod_plano
                     """;
         return conexao.query(sql, (rs, rowNum) -> setContrato(rs));
@@ -55,17 +55,17 @@ public class ContratoRepository {
 
     public List<Contrato> buscaPorNome(String nome) {
         String sql = """
-                        select cod_cont,
-                            dt_inicio,
-                            validade,
-                            valor,
-                            pa.cpf_paci,
-                            pa.nome_paci,
-                            pl.tipo_plano
-                        from contrata c, paciente pa, plano pl
-                        where c.cpf_paci = pa.cpf_paci
-                        and c.cod_plano = pl.cod_plano
-                        and pa.nome_paci like ?
+                    select cod_cont,
+                        dt_inicio,
+                        validade,
+                        valor,
+                        pa.cpf_paci,
+                        pa.nome_paci,
+                        pl.tipo_plano
+                    from contrato c, paciente pa, plano pl
+                    where c.cpf_paci = pa.cpf_paci
+                    and c.cod_plano = pl.cod_plano
+                    and pa.nome_paci like ?
                     """;
         return conexao.query(sql, (rs, rowNum) -> setContrato(rs),
         "%"+nome.toLowerCase()+"%");
@@ -80,10 +80,10 @@ public class ContratoRepository {
                         pa.cpf_paci,
                         pa.nome_paci,
                         pl.tipo_plano
-                        from contrata c, paciente pa, plano pl
-                        where c.cpf_paci = pa.cpf_paci
-                        and c.cod_plano = pl.cod_plano
-                        and cod_cont = ?
+                    from contrato c, paciente pa, plano pl
+                    where c.cpf_paci = pa.cpf_paci
+                    and c.cod_plano = pl.cod_plano
+                    and cod_cont = ?
                     """;
         return conexao.queryForObject(sql, (rs, rowNum) -> setContrato(rs),
         codigo);
@@ -98,7 +98,7 @@ public class ContratoRepository {
                         pa.cpf_paci,
                         pa.nome_paci,
                         pl.tipo_plano
-                    from contrata c, paciente pa, plano pl
+                    from contrato c, paciente pa, plano pl
                     where c.cpf_paci = pa.cpf_paci
                     and c.cod_plano = pl.cod_plano
                     and c.cpf_paci like ?
@@ -147,7 +147,7 @@ public class ContratoRepository {
     }
 
     public void excluir(Integer codigo) {
-        String sql = "delete from paciente where cod_cont = ?";
+        String sql = "delete from contrato where cod_cont = ?";
         conexao.update(sql, codigo);
     }
 }

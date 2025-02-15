@@ -2,7 +2,7 @@ create database menefreda;
 use menefreda;
 
 create table paciente (
-cpf_paci char(11) primary key,
+cpf_paci char(11) primary key auto_increment,
 nome_paci varchar(50),
 genero_paci char(1),
 email_paci varchar(100),

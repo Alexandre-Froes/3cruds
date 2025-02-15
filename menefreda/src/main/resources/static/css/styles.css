@@ -193,7 +193,6 @@ nav ul li a:hover {
     background-color: #555;
 }
 
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -234,4 +233,72 @@ nav ul li a:hover {
         opacity: 1;
         transform: scale(1);
     }
+}
+
+body main section{
+    color: #060A0E;
+    text-align: center;
+}
+body main section:first-of-type {
+    background-color: #05131a;
+}
+body main section:first-of-type h1,
+body main section:first-of-type i {
+    font-size: 10em;
+    margin: 10px;
+    display: inline-block;
+    animation: fadeInDown 0.5s ease-in-out;
+}
+body main section:nth-of-type(2) h2 {
+    font-size: 5em;
+    margin: 50px;
+    border-bottom: 3px solid #060A0E;
+    display: inline-block;
+    animation: fadeInDown 0.5s ease-in-out;
+}
+
+.fontBackground {
+    @supports (background-clip: text) or (-webkit-background-clip: text) {
+        background-image: 
+        url("data:image/svg+xml,%3Csvg width='2250' height='900' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg%3E%3Cpath fill='%2300A080' d='M0 0h2255v899H0z'/%3E%3Ccircle cx='366' cy='207' r='366' fill='%2300FDCF'/%3E%3Ccircle cx='1777.5' cy='318.5' r='477.5' fill='%2300FDCF'/%3E%3Ccircle cx='1215' cy='737' r='366' fill='%23008060'/%3E%3C/g%3E%3C/svg%3E%0A");
+        background-size: 110% auto;
+        background-position: center;
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+    }
+}
+
+.containerOpcoes {
+    margin: auto;
+    height: auto;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+}
+.containerOpcoes > div {
+    width: 20%;
+    display: block;
+    background-color: #05131A;
+    margin: 10px;
+    color: #E1EEF4;
+    padding: 20px;
+}
+.containerOpcoes > div > p {
+    font-size: 1.2em;
+    margin: 10px;
+}
+.containerOpcoes > div > h3 {
+    font-size: 1.4em;
+    margin: 10px;
+    border-bottom: 3px solid #004346;
+    display: inline-block;
+}
+.containerOpcoes > div > button,
+.containerOpcoes > div > i {
+    border: none;
+    cursor: pointer;
+    background-color: #05131A;
 }

@@ -43,6 +43,7 @@ public class ContratoController {
     public String listar(Model model) {
         List<Contrato> contratos = contratoRepository.listar();
         model.addAttribute(ATRIBUTO_LISTA, contratos);
+        
         return URL_LISTA;
     }
 
@@ -85,15 +86,16 @@ public class ContratoController {
         return URL_FORM;
     }
     
-    @GetMapping("/buscarNome")
+    @GetMapping("/buscar")
     public String buscar(@RequestParam("nome") String nome, Model model) {
         List<Contrato> contratos = contratoRepository.buscaPorNome(nome);
 
         if (contratos.isEmpty()) {
             model.addAttribute(ATRIBUTO_MENSAGEM, 
-            "Contrato com o nome: " +nome+ " não encontrado(a)");
+            "Paciente: " +nome+ " não tem nenhum contrato");
         }
 
+        model.addAttribute("contratos", contratos);
         return URL_LISTA;
     }
 }

@@ -85,5 +85,4 @@ public class PacienteController {
         model.addAttribute("pacientes", pacientes);
         return URL_LISTA;
     }
-
 }

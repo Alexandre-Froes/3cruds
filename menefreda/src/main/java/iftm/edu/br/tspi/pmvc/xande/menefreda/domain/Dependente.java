@@ -9,21 +9,22 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-
-public class Medico {
-    private Integer codigo;
+public class Dependente {
+    private String cpf;
+    private Paciente paciente;
+    private String telEmergencia;
+    private String genero;
     private String nome;
-    private String area;
-    private String numero;
-
+    private String dataNascimento;
+    private String parentesco;
+    
     @Override
     public int hashCode() {
-        final Integer prime = 31;
-        Integer result = 1;
-        result = prime * result + codigo;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
         return result;
     }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -32,9 +33,14 @@ public class Medico {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Medico other = (Medico) obj;
-        if (codigo != other.codigo)
+        Dependente other = (Dependente) obj;
+        if (cpf == null) {
+            if (other.cpf != null)
+                return false;
+        } else if (!cpf.equals(other.cpf))
             return false;
         return true;
     }
+
+    
 }

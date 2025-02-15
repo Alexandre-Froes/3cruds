@@ -3,14 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/1c8722ade6.js" crossorigin="anonymous"></script>
     <title th:text="${title}">Sistema</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
     <div>
-        <h1 th:text="${title}">Bem-Vindo ao sistema</h1>
-
-        <header th:insert="~{fragments/menu :: menu}"></header>
+        <main>
+            <section>
+                <h1 class="fontBackground">MENEFREDA</h1>
+                <i class="fa-solid fa-plus"></i>
+            </section>
+            <section>
+                <h2>PlaceHolder</h2>
+                <div class="containerOpcoes">
+                    <div>
+                        <h3>Gerênciar pacientes</h3>
+                        <button><i class="fa-solid fa-plus icone"></i></button>
+                    </div>
+                    <div>
+                        <h3>Gerênciar pacientes</h3>
+                        <button><i class="fa-solid fa-plus icone"></i></button>
+                    </div>
+                    <div>
+                        <h3>Gerênciar pacientes</h3>
+                        <button><i class="fa-solid fa-plus icone"></i></button>
+                    </div>
+                    <div>
+                        <h3>Gerênciar pacientes</h3>
+                        <button><i class="fa-solid fa-plus icone"></i></button>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- <footer th:insert="~{fragments/footer :: footer}"></footer> -->
     </div>
 </body>
 </html>
