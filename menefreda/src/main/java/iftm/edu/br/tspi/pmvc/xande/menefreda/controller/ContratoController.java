@@ -60,15 +60,14 @@ public class ContratoController {
     }
 
     @PostMapping("/novo")
-    public String salvar(@ModelAttribute Contrato contrato, @RequestParam("codigoPlano") String codigoPlano, Model model
+    public String salvar(@ModelAttribute Contrato contrato, Model model
     ) {
-        Plano plano = planoRepository.buscaPorCodigo(Integer.parseInt(codigoPlano));
-        contrato.setPlano(plano);
-    
         if (contrato.getCodigo() == null) {
             contratoRepository.salvar(contrato);
+            model.addAttribute(ATRIBUTO_MENSAGEM, "Contrato SALVO com sucesso");
         } else {
             contratoRepository.atualizar(contrato);
+            model.addAttribute(ATRIBUTO_MENSAGEM, "Contrato ATUALIZADO com sucesso");
         }
     
         return listar(model);

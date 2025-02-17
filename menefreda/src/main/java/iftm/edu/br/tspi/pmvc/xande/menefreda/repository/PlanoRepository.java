@@ -52,14 +52,12 @@ public class PlanoRepository {
     public void salvar(Plano plano) {
         String sql = """
                     insert into plano (
-                    cod_plano, 
                     valor_plano, 
                     tipo_plano)
                     
-                    values (?, ?, ?)
+                    values (?, ?)
                     """;
-        conexao.update(sql, 
-                        plano.getCodigo(), 
+        conexao.update(sql,  
                         plano.getValor(), 
                         plano.getTipo());
     }

@@ -41,14 +41,15 @@ public class ContratoRepository {
     public List<Contrato> listar() {
         String sql = """
                     select cod_cont,
-                        dt_inicio,
-                        validade,
-                        valor,
                         pa.cpf_paci,
                         pa.nome_paci,
-                        pl.tipo_plano
+                        pl.tipo_plano,
+                        c.dt_inicio,
+                        c.validade,
+                        c.valor
                     from contrato c, paciente pa, plano pl 
-                    where c.cpf_paci = pa.cpf_paci and c.cod_plano = pl.cod_plano
+                    where c.cpf_paci = pa.cpf_paci 
+                    and c.cod_plano = pl.cod_plano
                     """;
         return conexao.query(sql, (rs, rowNum) -> setContrato(rs));
     }
@@ -109,37 +110,38 @@ public class ContratoRepository {
     public void salvar(Contrato contrato) {
         String sql = """
                     insert into contrato(
+                        cpf_paci,
+                        cod_plano,
                         dt_inicio,
                         validade,
-                        valor,
-                        cpf_paci)
-                    values(?, ?, ?, ?)
+                        valor
+                        )
+                    values(?, ?, ?, ?, ?)
                     """;
             conexao.update(sql,
+                                contrato.getPaciente().getCpf(),
+                                contrato.getPlano().getCodigo(),
                                 contrato.getDataContratacao(),
                                 contrato.getDataValidade(),
-                                contrato.getValor(),
-                                contrato.getPaciente().getCpf());
+                                contrato.getValor());
     }
 
     public void atualizar(Contrato contrato) {
         String sql = """
                     update contrato
-                    set dt_inicio = ?,
+                    set cpf_paci = ?,
+                        cod_plano = ?,
+                        dt_inicio = ?,
                         validade = ?,
-                        valor = ?,
-                        cpf_paci = ?,
-                        nome_paci = (select nome_paci
-                                    from Paciente
-                                    where nome = cpf_paci),
-                        tipo_plano = ?
-                    where cod_paci = ?
+                        valor = ?
+                    where cod_cont = ?
                     """;
-        conexao.update(sql, contrato.getDataContratacao(),
+        conexao.update(sql, 
+                            contrato.getPaciente().getCpf(),
+                            contrato.getPlano().getCodigo(),
+                            contrato.getDataContratacao(),
                             contrato.getDataValidade(),
                             contrato.getValor(),
-                            contrato.getPaciente().getCpf(),
-                            contrato.getPlano().getTipo(),
                             contrato.getCodigo());
     }
 

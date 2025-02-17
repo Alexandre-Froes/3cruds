@@ -46,12 +46,13 @@ public class PacienteController {
         model.addAttribute(ATRIBUTO_OBJETO, new Paciente());
         return URL_FORM;
     }
+    
     @PostMapping("/novo")
     public String salvar(@ModelAttribute Paciente paciente, Model model) {
-        if(paciente.getCpf() != null) {
-            pacienteRepository.salvar(paciente);
-        } else {
+        if(paciente.getCodigo() != null) {
             pacienteRepository.atualizar(paciente);
+        } else {
+            pacienteRepository.salvar(paciente);
         }
 
         return listar(model);

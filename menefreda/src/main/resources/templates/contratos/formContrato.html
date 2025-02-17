@@ -11,24 +11,30 @@
     <header th:insert="~{fragments/menu :: menu}"></header>
     <section class="crudContainer">
         <div class="container containerForm">
+            <h1 th:text="${contrato.codigo != null ? 'Editar contrato' : 'Novo contrato'}">Contratos:</h1>
             <form th:action="@{${'/contratos/novo'}}" th:object="${contrato}" method="post">
-                <div>
-                    <label for="txtCódigo">Código:</label>
-                    <input type="text" th:field="*{codigo}" id="txtCódigo" th:readonly="true" placeholder="Código gerado automaticamente">
+                <div style="display: none;">
+                    <label for="txtCodigo">Código</label>
+                    <input type="text" th:field="*{codigo}" id="txtCodigo" placeholder="Digite o código" th:readonly="true">
                 </div>
                 <div>
-                    <label for="txtCpf">Cpf:</label>
-                    <input type="text" th:field="*{paciente.cpf}" id="txtCpf" placeholder="Digite o Cpf" required>
-                </div>
-                <div>
-                    <label for="txtNome">Nome:</label>
-                    <input type="text" th:field="*{paciente.nome}" id="txtNome" required th:readonly placeholder="Nome do Paciente">
+                    <label for="txtCpf">CPF:</label>
+                    <select id="txtCpf" th:field="*{paciente}" name="plano">
+                        <option value="" selected>Selecione um paciente</option>
+                        <option th:each="paciente : ${pacientes}" 
+                                th:value="${paciente.cpf}"          
+                                th:text="${paciente.nome} + ' - ' + ${paciente.cpf}">
+                        </option>
+                    </select>
                 </div>
                 <div>
                     <label for="plano">Plano:</label>
-                    <select id="plano" th:field="*{plano}">
+                    <select id="plano" th:field="*{plano.codigo}" name="plano">
                         <option value="" selected>Selecione um plano</option>
-                        <option th:each="plano : ${planos}" th:value="${plano.codigo}" th:text="${plano.tipo}"></option>
+                        <option th:each="plano : ${planos}" 
+                                th:value="${plano.codigo}"          
+                                th:text="${plano.tipo}">
+                        </option>
                     </select>
                 </div>
                 <div>

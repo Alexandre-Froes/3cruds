@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+
 @Controller
 @RequestMapping("/planos")
 public class PlanoController {
-    private PlanoRepository planoRepository;
+    private final PlanoRepository planoRepository;
 
     public static final String URL_LISTA = "planos/listaPlano";
     public static final String URL_FORM = "planos/formPlano";
-    public static final String URL_FORM_LISTA = "redirect:/plano";
+    public static final String URL_REDIRECT_LISTA = "redirect:/plano";
 
     public static final String ATRIBUTO_MENSAGEM = "mensagem";
     public static final String ATRIBUTO_OBJETO = "plano";
@@ -47,9 +48,9 @@ public class PlanoController {
     @PostMapping("/novo")
     public String salvar(@ModelAttribute Plano plano, Model model) {
         if (plano.getCodigo() != null) {
-            planoRepository.salvar(plano);
-        } else {
             planoRepository.atualizar(plano);
+        } else {
+            planoRepository.salvar(plano);
         }
 
         return listar(model);
@@ -61,6 +62,7 @@ public class PlanoController {
 
         return URL_FORM;
     }
+    
     @PostMapping("/excluir/{codigo}")
     public String excluir(@PathVariable Integer codigo, Model model) {
         planoRepository.excluir(codigo);

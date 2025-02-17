@@ -19,6 +19,7 @@ public class PacienteRepository {
 
     public Paciente setPaciente(ResultSet rs) throws SQLException {
         Paciente paciente = new Paciente();
+        paciente.setCodigo(rs.getInt("cod_paci"));
         paciente.setCpf(rs.getString("cpf_paci"));
         paciente.setNome(rs.getString("nome_paci"));
         paciente.setGenero(rs.getString("genero_paci"));
@@ -32,7 +33,9 @@ public class PacienteRepository {
 
     public List<Paciente> listar() {
         String sql = """
-                    select cpf_paci,
+                    select 
+                        cod_paci,
+                        cpf_paci,
                         nome_paci,
                         genero_paci,
                         email_paci,
@@ -46,7 +49,9 @@ public class PacienteRepository {
 
     public List<Paciente> buscaPorNome(String nome) {
         String sql = """
-                    select cpf_paci,
+                    select 
+                        cod_paci,
+                        cpf_paci,
                         nome_paci,
                         genero_paci,
                         email_paci,
@@ -62,7 +67,9 @@ public class PacienteRepository {
 
     public Paciente buscaPorCpf(String cpf) {
         String sql = """
-                    select cpf_paci,
+                    select 
+                        cod_paci,
+                        cpf_paci,
                         nome_paci,
                         genero_paci,
                         email_paci,
@@ -79,23 +86,23 @@ public class PacienteRepository {
         String sql ="""
                     insert into paciente(
                         cpf_paci,
-                        nome_paci, 
                         genero_paci, 
                         email_paci, 
+                        nome_paci, 
+                        dt_nasc_paci,
                         end_paci, 
-                        tel_paci, 
-                        dt_nasc_paci)
-
-                    values(?, ?, ?, ?, ?, ?, ?)
+                        tel_paci
+                    )
+                    values(?,?,?,?,?,?,?)
                     """;
         conexao.update(sql, 
                             paciente.getCpf(),
-                            paciente.getNome(),
                             paciente.getGenero(),
                             paciente.getEmail(),
+                            paciente.getNome(),
+                            paciente.getDataNascimento(),
                             paciente.getEndereco(),
-                            paciente.getTelefone(),
-                            paciente.getDataNascimento());
+                            paciente.getTelefone());
                             
     }
     public void atualizar(Paciente paciente) {
@@ -118,7 +125,13 @@ public class PacienteRepository {
                             paciente.getCpf());
     }
     public void excluir(String cpf) {
-        String sql = "delete from paciente where cpf_paci = ?";
-        conexao.update(sql, cpf);
+        String sqlContrato = "DELETE FROM contrato WHERE cpf_paci = ?";
+        conexao.update(sqlContrato, cpf);
+
+        String sqlDependente = "DELETE FROM dependente WHERE cpf_paci = ?";
+        conexao.update(sqlDependente, cpf);
+
+        String sqlPaciente = "DELETE FROM paciente WHERE cpf_paci = ?";
+        conexao.update(sqlPaciente, cpf);
     }
 }

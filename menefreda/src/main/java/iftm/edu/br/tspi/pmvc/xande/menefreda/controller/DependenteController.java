@@ -55,13 +55,12 @@ public class DependenteController {
     }
     
     @PostMapping("/novo")
-    public String salvaString(@ModelAttribute Dependente dependente, Model model) {
-        if(dependente.getCpf() != null) {
-            dependenteRepository.salvar(dependente);
-        } else {
+    public String salvar(@ModelAttribute Dependente dependente, Model model) {
+        if(dependente.getCodigo() != null) {
             dependenteRepository.atualizar(dependente);
+        } else {
+            dependenteRepository.salvar(dependente);
         }
-
         return listar(model);
     }
 
@@ -75,6 +74,8 @@ public class DependenteController {
 
     @GetMapping("/editar/{cpf}")
     public String editar(@PathVariable("cpf") String cpf, Model model) {
+        List<Paciente> pacientes = pacienteRepository.listar();
+        model.addAttribute("pacientes", pacientes);
         Dependente dependente = dependenteRepository.buscaPorCpfDep(cpf);
         model.addAttribute(ATRIBUTO_OBJETO, dependente);
 
@@ -93,15 +94,5 @@ public class DependenteController {
         }
         
         return URL_LISTA;
-    }
-
-    public String getNomePaciente(@RequestParam String cpf, Model model) {
-        Paciente paciente = pacienteRepository.buscaPorCpf(cpf);
-        if (paciente != null) {
-            model.addAttribute("nomePaciente", paciente.getNome());
-        } else {
-            model.addAttribute("nomePaciente", "");
-        }
-        return "fragments/nomePaciente :: nomePacienteFragment";
     }
 }

@@ -18,7 +18,7 @@
 
             <div class="searchContainer">
                 <form th:action="@{/contratos/buscar}" method="get">
-                    <input type="reset" class="btn" value="Limpar busca">
+                    <a th:href="@{/contratos}" class="btn">Limpar busca</a>
                     <input type="text" name="nome" placeholder="Buscar por Nome" required>
                     <button type="submit" class="btn icone"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
@@ -27,7 +27,6 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Codigo</th>
                             <th>CPF</th>
                             <th>Nome</th>
                             <th>Tipo do Plano</th>
@@ -38,7 +37,6 @@
                     </thead>
                     <tbody>
                         <tr th:each="contrato : ${contratos}">
-                            <td th:text="${contrato.codigo}">codigo</td>
                             <td th:text="${contrato.paciente.cpf}">CPF</td>
                             <td th:text="${contrato.paciente.nome}">Nome</td>
                             <td th:text="${contrato.plano.tipo}">Tipo plano</td>

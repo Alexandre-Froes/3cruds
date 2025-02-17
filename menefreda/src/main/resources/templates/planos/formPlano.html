@@ -11,10 +11,11 @@
     <header th:insert="~{fragments/menu :: menu}"></header>
     <section class="crudContainer">
         <div class="container containerForm">
+            <h1 th:text="${plano.codigo != null ? 'Editar plano' : 'Novo plano'}">Planos:</h1>
             <form th:action="@{${'/planos/novo'}}" th:object="${plano}" method="post">
-                <div>
+                <div style="display: none;">
                     <label for="txtCodigo">Código:</label>
-                    <input type="text" th:field="*{codigo}" id="txtCodigo" placeholder="Digite o código" required th:readonly= true>
+                    <input type="text" th:field="*{codigo}" id="txtCodigo" th:readonly="true">
                 </div>
                 <div>
                     <label for="txtTipo">Tipo:</label>
@@ -25,7 +26,7 @@
                     <input type="number" th:field="*{valor}" id="txtValor" placeholder="Digite o valor" required>
                 </div>
     
-                <button type="submit" text="salvar" class="btn btnSalvar">Salvar</button>
+                <button type="submit" text="Salvar" class="btn btnSalvar">Salvar</button>
             </form>
     
             <a th:href="@{/planos}" class="btn">Voltar à lista de planos</a>

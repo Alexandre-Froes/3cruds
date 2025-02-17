@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Dependente {
+    private Integer codigo;
     private String cpf;
     private Paciente paciente;
     private String telEmergencia;

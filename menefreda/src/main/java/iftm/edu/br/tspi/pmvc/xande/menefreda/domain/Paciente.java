@@ -11,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Paciente {
+    private Integer codigo;
     private String cpf;
     private String nome;
     private String genero;

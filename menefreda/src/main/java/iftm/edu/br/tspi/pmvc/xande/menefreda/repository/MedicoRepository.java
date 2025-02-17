@@ -62,15 +62,13 @@ public class MedicoRepository {
     public void salvar(Medico medico){
         String sql = """
                     insert into medico (
-                        cod_medico,
                         nome_medico,
                         area_atuacao,
                         tel_medico
                     )
-                    values(?,?,?,?)
+                    values (?,?,?)
                     """;
-        conexao.update(sql, medico.getCodigo(),
-                                   medico.getNome(),
+        conexao.update(sql, medico.getNome(),
                                    medico.getArea(),
                                    medico.getNumero());
     }

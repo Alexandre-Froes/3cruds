@@ -11,7 +11,12 @@
     <header th:insert="~{fragments/menu :: menu}"></header>
     <section class="crudContainer">
         <div class="container containerForm">
-            <form th:action="@{${'/depententes/novo'}}" th:object="${dependente}" method="post">
+            <h1 th:text="${dependente.nome != null ? 'Editar dependente' : 'Novo dependente'}">Dependentes:</h1>
+            <form th:action="@{${'/dependentes/novo'}}" th:object="${dependente}" method="post">
+                <div style="display: none;">
+                    <label for="txCodigo">Código</label>
+                    <input type="text" th:field="*{codigo}" id="txCodigo" th:readonly="true">
+                </div>
                 <div>
                     <label for="txtCpf">CPF do dependente:</label>
                     <input type="text" th:field="*{cpf}" id="txtCpf" placeholder="Digite o CPF do dependente" required>
@@ -21,8 +26,8 @@
                     <input type="text" th:field="*{nome}" id="txtNome" placeholder="Digite o Nome do dependente" required>
                 </div>
                 <div>
-                    <label for="genero">Sexo:</label>
-                    <select name="genero" id="genero" th:field="*{genero}">
+                    <label for="txtGenero">Sexo:</label>
+                    <select name="genero" id="txtGenero" th:field="*{genero}">
                         <option value="" selected>Selecione um Sexo</option>
                         <option th:value="M">Masculino</option>
                         <option th:value="F">Feminino</option>
@@ -33,8 +38,8 @@
                     <input type="date" th:field="*{dataNascimento}" id="txtDataNasc" placeholder="Coloque a data de nascimento" required>
                 </div>
                 <div>
-                    <label for="paciente">Paciente:</label>
-                    <select id="paciente" name="paciente" th:field="*{paciente.cpf}">
+                    <label for="txtPaciente">Paciente:</label>
+                    <select id="txtPaciente" name="paciente" th:field="*{paciente.cpf}">
                         <option value="" selected>Selecione um paciente</option>
                         <option th:each="paciente : ${pacientes}" 
                                 th:value="${paciente.cpf}" 
@@ -42,6 +47,11 @@
                         </option>
                     </select>
                 </div>  
+                <div>
+                    <label for="txtParentesco">Grau de parentesco:</label>
+                    <input type="text" th:field="*{parentesco}" id="txtParentesco" required
+                    placeholder="Coloque o grau de parentesco">
+                </div>
                 <div>
                     <label for="txtTel">telefone de emergencia:</label>
                     <input type="text" th:field="*{telEmergencia}" id="txtTel" required
@@ -51,8 +61,10 @@
                 <button type="submit" text="Salvar" class="btn btnSalvar">Salvar</button>
             </form>
     
-            <a th:href="@{/depententes}" class="btn">Voltar à lista de depententes</a>
+            <a th:href="@{/dependentes}" class="btn">Voltar à lista de dependentes</a>
         </div>
     </section>
+
+    <script th:src="@{/js/dependentes/dependentes.js}"></script>
 </body>
 </html>

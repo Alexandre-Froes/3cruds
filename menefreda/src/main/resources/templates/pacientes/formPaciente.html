@@ -11,7 +11,12 @@
     <header th:insert="~{fragments/menu :: menu}"></header>
     <section class="crudContainer">
         <div class="container containerForm">
+            <h1 th:text="${paciente.nome != null ? 'Editar paciente' : 'Novo paciente'}">Pacientes:</h1>
             <form th:action="@{${'/pacientes/novo'}}" th:object="${paciente}" method="post">
+                <div style="display: none;">
+                    <label for="txtCodigo">Código:</label>
+                    <input type="text" th:field="*{codigo}" id="txtCodigo" th:readonly="true">
+                </div>
                 <div>
                     <label for="txtCpf">CPF:</label>
                     <input type="text" th:field="*{cpf}" id="txtCpf" placeholder="Digite o CPF" required>
@@ -45,11 +50,13 @@
                     <input type="date" th:field="*{dataNascimento}" id="txtDataNascimento" placeholder="Digite a data de nascimento" required>
                 </div>
     
-                <button type="submit" text="Salvar" class="btn btnSalvar">Salvar</button>
+                <button type="submit" text="Salvar" class="btn btnSalvar" id="btnSalvar">Salvar</button>
             </form>
     
             <a th:href="@{/pacientes}" class="btn">Voltar à lista de pacientes</a>
         </div>
     </section>
+
+    <script th:src="@{/js/pacientes/pacientes.js}"></script>
 </body>
 </html>

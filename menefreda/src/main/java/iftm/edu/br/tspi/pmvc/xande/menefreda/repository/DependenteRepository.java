@@ -20,6 +20,7 @@ public class DependenteRepository {
 
     public Dependente setDependente(ResultSet rs) throws SQLException {
         Dependente dependente = new Dependente();
+        dependente.setCodigo(rs.getInt("cod_dep"));
         dependente.setCpf(rs.getString("cpf_dep"));
         dependente.setNome(rs.getString("nm_dep"));
         dependente.setGenero(rs.getString("genero_dep"));
@@ -39,7 +40,9 @@ public class DependenteRepository {
 
     public List<Dependente> listar() {
         String sql = """
-                    select cpf_dep,
+                    select 
+                        cod_dep,
+                        cpf_dep,
                         nm_dep,
                         genero_dep,
                         dt_nasc_dep,
@@ -55,7 +58,9 @@ public class DependenteRepository {
 
     public List<Dependente> buscaPorNomeDep(String nome) {
         String sql = """
-                    select cpf_dep,
+                    select 
+                        cod_dep,
+                        cpf_dep,
                         nm_dep,
                         genero_dep,
                         dt_nasc_dep,
@@ -72,7 +77,9 @@ public class DependenteRepository {
     
     public Dependente buscaPorCpfDep(String cpf) {
         String sql = """
-                    select cpf_dep,
+                    select 
+                        cod_dep,
+                        cpf_dep,
                         nm_dep,
                         genero_dep,
                         dt_nasc_dep,
@@ -96,7 +103,7 @@ public class DependenteRepository {
                         dt_nasc_dep,
                         parentesco
                     )
-                    values(?,?,?,?,?,?,?,?)
+                    values(?,?,?,?,?,?,?)
                     """;
         conexao.update(sql, dependente.getCpf(),
                             dependente.getPaciente().getCpf(),
@@ -111,17 +118,17 @@ public class DependenteRepository {
         String sql = """
                     update dependente
                     set nm_dep = ?,
-                        tel_emergencia = ?,
                         genero_dep = ?,
                         dt_nasc_dep = ?,
-                        parentesco = ?
+                        parentesco = ?,
+                        tel_emergencia = ?
                     where cpf_dep = ?
                     """;
         conexao.update(sql, dependente.getNome(),
-                            dependente.getTelEmergencia(),
                             dependente.getGenero(),
                             dependente.getDataNascimento(),
                             dependente.getParentesco(),
+                            dependente.getTelEmergencia(),
                             dependente.getCpf());
     }
 

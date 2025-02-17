@@ -21,7 +21,7 @@ public class MedicoController {
 
     public static final String URL_LISTA = "medicos/listaMedico";
     public static final String URL_FORM = "medicos/formMedico";
-    public static final String URL_FORM_LISTA = "redirect:/medico";
+    public static final String URL_REDIRECT_LISTA = "redirect:/medico";
 
     public static final String ATRIBUTO_MENSAGEM = "mensagem";
     public static final String ATRIBUTO_OBJETO = "medico";
@@ -46,7 +46,7 @@ public class MedicoController {
 
     @PostMapping("/novo")
     public String salvar(@ModelAttribute Medico medico, Model model){
-        if(medico.getCodigo() != null){
+        if(medico.getCodigo() == null){
             medicoRepository.salvar(medico);
         }else{
             medicoRepository.atualizar(medico);

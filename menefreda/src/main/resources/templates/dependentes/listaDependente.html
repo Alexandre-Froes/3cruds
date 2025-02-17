@@ -11,14 +11,14 @@
     <header th:insert="~{fragments/menu :: menu}"></header>
     <section class="crudContainer">
         <div class="container">
-            <h1>dependentes de pacientes</h1>
+            <h1>Dependentes de pacientes</h1>
             <div th:if="${mensagem}" class="msgContainer">
                 <p th:text="${mensagem}"></p>
             </div>
 
             <div class="searchContainer">
                 <form th:action="@{/dependentes/buscar}" method="get">
-                    <input type="reset" class="btn" value="Limpar busca">
+                    <a th:href="@{/dependentes}" class="btn">Limpar busca</a>
                     <input type="text" name="nome" placeholder="Buscar por Nome" required>
                     <button type="submit" class="btn icone"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>

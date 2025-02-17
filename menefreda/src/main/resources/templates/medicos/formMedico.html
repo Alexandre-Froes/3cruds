@@ -8,14 +8,14 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
+    <header th:insert="~{fragments/menu :: menu}"></header>
     <section class="crudContainer">
         <div class="container containerForm">
             <h1 th:text="${medico.nome != null ? 'Editar médico' : 'Novo médico'}">Médicos:</h1>
-            
-            <form th:action="@{${medico.nome != null} ? '/medico/editar/' + ${medico.codigo} : '/medico/novo'}" th:object="${medico}" method="post">
-                <div>
-                    <label for="txtCodigo">Código:</label>
-                    <input type="text" th:field="*{codigo}" id="txtCodigo" placeholder="Digite o código" required readonly>
+            <form th:action="@{${'/medicos/novo'}}" th:object="${medico}" method="post">
+                <div style="display: none;">
+                    <label for="txtCodigo">Código</label>
+                    <input type="text" th:field="*{codigo}" id="txtCodigo" th:readonly="true" />
                 </div>
                 <div>
                     <label for="txtNome">Nome:</label>
@@ -30,10 +30,10 @@
                     <input type="text" th:field="*{numero}" id="txtNumero" placeholder="Digite o número de telefone" required>
                 </div>
 
-                <button type="submit" th:text="${medico.nome != null ? 'Atualizar' : 'Salvar'}" class="btn btnSalvar">Salvar</button>
+                <button type="submit" class="btn btnSalvar">Salvar</button>
             </form>
 
-            <a th:href="@{/medico}" class="btn">Voltar à lista de médicos</a>
+            <a th:href="@{/medicos}" class="btn">Voltar à lista de médicos</a>
         </div>
     </section>
 </body>

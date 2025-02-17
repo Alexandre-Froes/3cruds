@@ -9,6 +9,7 @@ create table plano (
 );
 
 create table paciente (
+	cod_paci int unique auto_increment,
 	cpf_paci char(11) primary key,
     genero_paci char(1),
     email_paci varchar(255),
@@ -21,6 +22,7 @@ create table paciente (
 );
 
 create table dependente (
+	cod_dep int unique auto_increment,
 	cpf_dep char(11) primary key,
     cpf_paci char(11),
     tel_emergencia varchar(255),
@@ -88,11 +90,10 @@ create table planoProcedimento (
 ); 
 
 INSERT INTO plano (tipo_plano, valor_plano) VALUES
-('Básico', 90.00),
-('Premium', 150.00),
-('Família', 200.00),
-('Empresarial', 1200.00),
-('Saúde Total', 300.00);
+('Bronze', 90.00),
+('Prata', 140.00),
+('Gold', 180.00),
+('Diamante', 200.00);
 
 insert into paciente (cpf_paci, nome_paci, genero_paci, email_paci, dt_nasc_paci, end_paci, tel_paci, cod_plano) 
 values

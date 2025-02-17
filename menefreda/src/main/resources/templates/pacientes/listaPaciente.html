@@ -18,7 +18,7 @@
 
             <div class="searchContainer">
                 <form th:action="@{/pacientes/buscar}" method="get">
-                    <input type="reset" class="btn" value="Limpar busca">
+                    <a th:href="@{/pacientes}" class="btn">Limpar busca</a>
                     <input type="text" name="nome" placeholder="Buscar por Nome" required>
                     <button type="submit" class="btn icone"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
