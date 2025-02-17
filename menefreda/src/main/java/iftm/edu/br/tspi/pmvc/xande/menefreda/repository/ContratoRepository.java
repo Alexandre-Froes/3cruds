@@ -85,8 +85,7 @@ public class ContratoRepository {
                     and c.cod_plano = pl.cod_plano
                     and cod_cont = ?
                     """;
-        return conexao.queryForObject(sql, (rs, rowNum) -> setContrato(rs),
-        codigo);
+        return conexao.queryForObject(sql, (rs, rowNum) -> setContrato(rs), codigo);
     }
 
     public Contrato buscaPorCpf(String cpf) {
@@ -110,15 +109,13 @@ public class ContratoRepository {
     public void salvar(Contrato contrato) {
         String sql = """
                     insert into contrato(
-                        cod_cont,
                         dt_inicio,
                         validade,
                         valor,
                         cpf_paci)
-                    values(?, ?, ?, ?, ?)
+                    values(?, ?, ?, ?)
                     """;
             conexao.update(sql,
-                                contrato.getCodigo(),
                                 contrato.getDataContratacao(),
                                 contrato.getDataValidade(),
                                 contrato.getValor(),

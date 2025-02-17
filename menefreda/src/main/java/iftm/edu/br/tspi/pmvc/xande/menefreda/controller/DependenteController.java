@@ -24,8 +24,8 @@ public class DependenteController {
     private final DependenteRepository dependenteRepository;
     private final PacienteRepository pacienteRepository;
 
-    public static final String URL_LISTA = "dependentes/listaDependntes";
-    public static final String URL_FORM = "dependentes/formDependntes";
+    public static final String URL_LISTA = "dependentes/listaDependente";
+    public static final String URL_FORM = "dependentes/formDependente";
     public static final String URL_FORM_LISTA = "redirect:/dependente";
 
     public static final String ATRIBUTO_MENSAGEM = "mensagem";
@@ -94,5 +94,14 @@ public class DependenteController {
         
         return URL_LISTA;
     }
-    
+
+    public String getNomePaciente(@RequestParam String cpf, Model model) {
+        Paciente paciente = pacienteRepository.buscaPorCpf(cpf);
+        if (paciente != null) {
+            model.addAttribute("nomePaciente", paciente.getNome());
+        } else {
+            model.addAttribute("nomePaciente", "");
+        }
+        return "fragments/nomePaciente :: nomePacienteFragment";
+    }
 }

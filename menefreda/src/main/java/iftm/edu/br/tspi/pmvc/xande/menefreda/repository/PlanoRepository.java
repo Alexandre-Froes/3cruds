@@ -81,5 +81,4 @@ public class PlanoRepository {
         String sql = "delete from plano where cod_plano = ?";
         conexao.update(sql, codigo);
     }
-
 }

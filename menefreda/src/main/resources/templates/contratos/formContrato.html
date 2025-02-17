@@ -10,11 +10,11 @@
 <body>
     <header th:insert="~{fragments/menu :: menu}"></header>
     <section class="crudContainer">
-        <div class="container">
+        <div class="container containerForm">
             <form th:action="@{${'/contratos/novo'}}" th:object="${contrato}" method="post">
                 <div>
                     <label for="txtCódigo">Código:</label>
-                    <input type="text" th:field="*{codigo}" id="txtCódigo" placeholder="Digite o Código" required>
+                    <input type="text" th:field="*{codigo}" id="txtCódigo" th:readonly="true" placeholder="Código gerado automaticamente">
                 </div>
                 <div>
                     <label for="txtCpf">Cpf:</label>
@@ -22,11 +22,14 @@
                 </div>
                 <div>
                     <label for="txtNome">Nome:</label>
-                    <input type="text" th:field="*{paciente.nome}" id="txtNome" required readonly>
+                    <input type="text" th:field="*{paciente.nome}" id="txtNome" required th:readonly placeholder="Nome do Paciente">
                 </div>
                 <div>
-                    <label for="txtTipo">Tipo do Plano:</label>
-                    <input type="text" th:field="*{plano.tipo}" id="txtTipoPlano" placeholder="Digite o tipo do Plano" required>
+                    <label for="plano">Plano:</label>
+                    <select id="plano" th:field="*{plano}">
+                        <option value="" selected>Selecione um plano</option>
+                        <option th:each="plano : ${planos}" th:value="${plano.codigo}" th:text="${plano.tipo}"></option>
+                    </select>
                 </div>
                 <div>
                     <label for="txtDataContrato">Data de Contratação:</label>
@@ -38,7 +41,7 @@
                 </div>
                 <div>
                     <label for="txtValor">Valor do Plano:</label>
-                    <input type="text" th:field="*{valor}" id="txtValor" placeholder="Digite oValore" required>
+                    <input type="text" th:field="*{valor}" id="txtValor" placeholder="Digite o valor do plano" required>
                 </div>
                 <button type="submit" text="Salvar" class="btn btnSalvar">Salvar</button>
             </form>

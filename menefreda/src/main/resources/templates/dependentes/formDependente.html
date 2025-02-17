@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="novo">Form de depentente</title>
+    <script src="https://kit.fontawesome.com/1c8722ade6.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <header th:insert="~{fragments/menu :: menu}"></header>
+    <section class="crudContainer">
+        <div class="container containerForm">
+            <form th:action="@{${'/depententes/novo'}}" th:object="${dependente}" method="post">
+                <div>
+                    <label for="txtCpf">CPF do dependente:</label>
+                    <input type="text" th:field="*{cpf}" id="txtCpf" placeholder="Digite o CPF do dependente" required>
+                </div>
+                <div>
+                    <label for="txtNome">Nome do dependente:</label>
+                    <input type="text" th:field="*{nome}" id="txtNome" placeholder="Digite o Nome do dependente" required>
+                </div>
+                <div>
+                    <label for="genero">Sexo:</label>
+                    <select name="genero" id="genero" th:field="*{genero}">
+                        <option value="" selected>Selecione um Sexo</option>
+                        <option th:value="M">Masculino</option>
+                        <option th:value="F">Feminino</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="txtDataNasc">Data de nascimento:</label>
+                    <input type="date" th:field="*{dataNascimento}" id="txtDataNasc" placeholder="Coloque a data de nascimento" required>
+                </div>
+                <div>
+                    <label for="paciente">Paciente:</label>
+                    <select id="paciente" name="paciente" th:field="*{paciente.cpf}">
+                        <option value="" selected>Selecione um paciente</option>
+                        <option th:each="paciente : ${pacientes}" 
+                                th:value="${paciente.cpf}" 
+                                th:text="${paciente.nome}">
+                        </option>
+                    </select>
+                </div>  
+                <div>
+                    <label for="txtTel">telefone de emergencia:</label>
+                    <input type="text" th:field="*{telEmergencia}" id="txtTel" required
+                    placeholder="Coloque o telefone de emergencia">
+                </div>
+
+                <button type="submit" text="Salvar" class="btn btnSalvar">Salvar</button>
+            </form>
+    
+            <a th:href="@{/depententes}" class="btn">Voltar à lista de depententes</a>
+        </div>
+    </section>
+</body>
+</html>

@@ -19,30 +19,34 @@ public class DependenteRepository {
     }
 
     public Dependente setDependente(ResultSet rs) throws SQLException {
-        Paciente paciente = new Paciente();
-        paciente.setCpf(rs.getString("cpf_paci"));
-        
         Dependente dependente = new Dependente();
         dependente.setCpf(rs.getString("cpf_dep"));
-        dependente.setTelEmergencia(rs.getString("tel_emergencia"));
-        dependente.setGenero(rs.getString("genero_dep"));
         dependente.setNome(rs.getString("nm_dep"));
+        dependente.setGenero(rs.getString("genero_dep"));
         dependente.setDataNascimento(rs.getString("dt_nasc_dep"));
+        
+        Paciente paciente = new Paciente();
+        paciente.setCpf(rs.getString("cpf_paci"));
+        paciente.setNome(rs.getString("nome_paci"));
         dependente.setParentesco(rs.getString("parentesco"));
+        
+        dependente.setTelEmergencia(rs.getString("tel_emergencia"));
 
+        dependente.setPaciente(paciente);
         return dependente;
     }
+
 
     public List<Dependente> listar() {
         String sql = """
                     select cpf_dep,
                         nm_dep,
-                        cpf_paci,
-                        nome_paci,
-                        tel_emergencia,
                         genero_dep,
                         dt_nasc_dep,
-                        parentesco
+                        p.cpf_paci,
+                        p.nome_paci,
+                        parentesco,
+                        tel_emergencia
                     from dependente d, paciente p
                     where d.cpf_paci = p.cpf_paci
                     """;
@@ -53,12 +57,12 @@ public class DependenteRepository {
         String sql = """
                     select cpf_dep,
                         nm_dep,
-                        cpf_paci,
-                        nome_paci,
-                        tel_emergencia,
                         genero_dep,
                         dt_nasc_dep,
-                        parentesco
+                        d.cpf_paci,
+                        nome_paci,
+                        parentesco,
+                        tel_emergencia
                     from dependente d, paciente p
                     where d.cpf_paci = p.cpf_paci and nm_dep like ?
                     """;
@@ -70,12 +74,12 @@ public class DependenteRepository {
         String sql = """
                     select cpf_dep,
                         nm_dep,
-                        cpf_paci,
-                        nome_paci,
-                        tel_emergencia,
                         genero_dep,
                         dt_nasc_dep,
-                        parentesco
+                        d.cpf_paci,
+                        nome_paci,
+                        parentesco,
+                        tel_emergencia
                     from dependente d, paciente p
                     where d.cpf_paci = p.cpf_paci and cpf_dep like ?
                     """;

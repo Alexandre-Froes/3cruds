@@ -10,7 +10,7 @@
 <body>
     <header th:insert="~{fragments/menu :: menu}"></header>
     <section class="crudContainer">
-        <div class="container">
+        <div class="container containerForm">
             <form th:action="@{${'/pacientes/novo'}}" th:object="${paciente}" method="post">
                 <div>
                     <label for="txtCpf">CPF:</label>
@@ -21,12 +21,11 @@
                     <input type="text" th:field="*{nome}" id="txtNome" placeholder="Digite o nome" required>
                 </div>
                 <div>
-                    <label for="txtGenero">Gênero:</label>
+                    <label for="txtGenero">Sexo:</label>
                     <select id="txtGenero" name="genero" th:field="*{genero}">
-                        <option value="" selected>Escolha:</option>
-                        <option th:value="Masculino">Masulino</option>
-                        <option th:value="Feminino">Feminino</option>
-                        <option th:value="Outros">Outros</option>
+                        <option value="" selected>Selecione um sexo</option>
+                        <option th:value="M">Masculino</option>
+                        <option th:value="F">Feminino</option>
                     </select>
                 </div>
                 <div>

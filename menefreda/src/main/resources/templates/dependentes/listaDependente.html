@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dependentes</title>
+    <script src="https://kit.fontawesome.com/1c8722ade6.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <header th:insert="~{fragments/menu :: menu}"></header>
+    <section class="crudContainer">
+        <div class="container">
+            <h1>dependentes de pacientes</h1>
+            <div th:if="${mensagem}" class="msgContainer">
+                <p th:text="${mensagem}"></p>
+            </div>
+
+            <div class="searchContainer">
+                <form th:action="@{/dependentes/buscar}" method="get">
+                    <input type="reset" class="btn" value="Limpar busca">
+                    <input type="text" name="nome" placeholder="Buscar por Nome" required>
+                    <button type="submit" class="btn icone"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CPF</th>
+                            <th>Nome</th>
+                            <th>Gênero</th>
+                            <th>Data de nascimento</th>
+                            <th>CPF Responsável</th>
+                            <th>Nome Responsável</th>
+                            <th>Parentesco</th>
+                            <th>Telefone de Emergencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="dependente : ${dependentes}">
+                            <td th:text="${dependente.cpf}">cpfDep</td>
+                            <td th:text="${dependente.nome}">nomeDep</td>
+                            <td th:text="${dependente.genero}">genero</td>
+                            <td th:text="${dependente.dataNascimento}">dataNasc</td>
+                            <td th:text="${dependente.paciente.cpf}">cpfPaci</td>
+                            <td th:text="${dependente.paciente.nome}">nomePaci</td>
+                            <td th:text="${dependente.parentesco}">nomePaci</td>
+                            <td th:text="${dependente.telEmergencia}">nomePaci</td>
+                            <td>
+                                <a th:href="@{/dependentes/editar/{cpf}(cpf=${dependente.cpf})}" class="btn"><i class="fa-solid fa-pen"></i></a>
+                            </td>
+                            <td>
+                                <form th:action="@{/dependentes/excluir/{cpf}(cpf=${dependente.cpf})}" method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir o dependente?');">
+                                    <button type="submit" class="btn btnExcluir"><i class="fa-solid fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a th:href="@{/dependentes/novo}" class="btn"><i class="fa-solid fa-plus btn icone"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

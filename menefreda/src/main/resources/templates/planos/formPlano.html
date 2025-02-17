@@ -10,11 +10,11 @@
 <body>
     <header th:insert="~{fragments/menu :: menu}"></header>
     <section class="crudContainer">
-        <div class="container">
+        <div class="container containerForm">
             <form th:action="@{${'/planos/novo'}}" th:object="${plano}" method="post">
                 <div>
                     <label for="txtCodigo">Código:</label>
-                    <input type="text" th:field="*{codigo}" id="txtCodigo" placeholder="Digite o código" required th:readonly="${plano.codigo != null}">
+                    <input type="text" th:field="*{codigo}" id="txtCodigo" placeholder="Digite o código" required th:readonly= true>
                 </div>
                 <div>
                     <label for="txtTipo">Tipo:</label>

@@ -60,13 +60,17 @@ public class ContratoController {
     }
 
     @PostMapping("/novo")
-    public String salvar(@ModelAttribute Contrato contrato, Model model) {
-        if(contrato.getCodigo() != null) {
+    public String salvar(@ModelAttribute Contrato contrato, @RequestParam("codigoPlano") String codigoPlano, Model model
+    ) {
+        Plano plano = planoRepository.buscaPorCodigo(Integer.parseInt(codigoPlano));
+        contrato.setPlano(plano);
+    
+        if (contrato.getCodigo() == null) {
             contratoRepository.salvar(contrato);
         } else {
             contratoRepository.atualizar(contrato);
         }
-
+    
         return listar(model);
     }
 
@@ -81,7 +85,10 @@ public class ContratoController {
     @GetMapping("/editar/{codigo}")
     public String editar(@PathVariable("codigo") Integer codigo, Model model) {
         Contrato contrato = contratoRepository.buscaPorCodigo(codigo);
+
         model.addAttribute(ATRIBUTO_OBJETO, contrato);
+        model.addAttribute("pacientes", pacienteRepository.listar());
+        model.addAttribute("planos", planoRepository.listar());
         
         return URL_FORM;
     }
@@ -98,4 +105,6 @@ public class ContratoController {
         model.addAttribute("contratos", contratos);
         return URL_LISTA;
     }
+
+    
 }
